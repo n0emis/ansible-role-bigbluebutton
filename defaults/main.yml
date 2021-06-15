@@ -44,7 +44,7 @@ bbb_greenlight_image: bigbluebutton/greenlight:v2
 bbb_disable_recordings: false
 bbb_api_demos_enable: false
 bbb_mute_on_start: false
-bbb_app_log_level: "DEBUG"
+bbb_app_log_level: 'DEBUG'
 bbb_nodejs_version: 12.x
 bbb_freeswitch_ipv6: true
 bbb_freeswitch_ip_address: "{{ ansible_default_ipv4.address }}"
