@@ -13,11 +13,31 @@
     dest: /etc/alternatives/java
     state: link
 
+- name: Add NGINX sources
+  become: true
+  block:
+    - name: "Install NGINX sources dependencies"
+      apt:
+        name: "software-properties-common"
+        state: latest
+
+    - name: "Add APT NGINX Signing Key"
+      apt_key:
+        url: "https://nginx.org/keys/nginx_signing.key"
+
+    - name: "Add NGINX Repository"
+      apt_repository:
+        repo: "deb [arch=amd64] https://nginx.org/packages/{{ (bbb_nginx_use_mainline_branch|bool)
+          | ternary('mainline/', '') }}{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
+  when: bbb_nginx_install_from_source|bool
+
 - name: install nginx-full for client-logging
   become: true
   apt:
     name: nginx-full
     state: "{{ bbb_state }}"
+    autoremove: true
+    update_cache: true
   when: bbb_client_log_enable
 
 - name: install nginx-core, no client-logging
@@ -26,7 +46,12 @@
     name: nginx-core
     state: "{{ bbb_state }}"
     autoremove: true
+    update_cache: true
   when: not bbb_client_log_enable
+
+- name: "Debug message regarding packages installation"
+  debug:
+    msg: "Installing bbb packages and dependencies, this may take a while..."
 
 - name: install bbb and dependencies
   become: true
