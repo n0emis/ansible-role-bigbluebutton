@@ -41,7 +41,6 @@ bbb_webhooks_enable: false
 bbb_allow_mail_notifications: true
 bbb_greenlight_hosts: "{{ bbb_hostname }}"
 bbb_greenlight_image: bigbluebutton/greenlight:v2
-bbb_disable_recordings: false
 bbb_api_demos_enable: false
 bbb_mute_on_start: false
 bbb_app_log_level: "DEBUG"
@@ -52,10 +51,10 @@ bbb_freeswitch_external_ip: "stun:{{ (bbb_stun_servers | first).server }}"
 bbb_freeswitch_muted_sound: true
 bbb_freeswitch_unmuted_sound: true
 
+
 bbb_kurento_interfaces:
 - "{{ ansible_default_ipv4.interface }}"
 - lo
-
 # ALWAYS_ACCEPT, ALWAYS_DENY, ASK_MODERATOR
 bbb_guestpolicy: ALWAYS_ACCEPT
 
@@ -76,6 +75,10 @@ bbb_ssl_key: "/etc/letsencrypt/live/{{ bbb_hostname }}/privkey.pem"
 # bbb_own_key:
 
 bbb_meteor: {}
+bbb_disable_recordings: false
+bbb_recordings_nfs:
+  enable: false
+  path: ""
 bbb_recording_config: {}
 bbb_dialplan_quality: "cdquality"
 bbb_dialplan_energy_level: 100

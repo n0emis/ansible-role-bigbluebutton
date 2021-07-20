@@ -86,6 +86,9 @@
   tags:
     - dial-in
 
+- import_tasks: recordings_nfs.yml
+  when: bbb_recordings_nfs['enable'] | bool and not bbb_disable_recordings | bool and bbb_recordings_nfs['path'] | length > 0
+
 - import_tasks: docker.yml
   when: bbb_greenlight_enable | bool or bbb_monitoring_all_in_one_enable | bool
   tags:
